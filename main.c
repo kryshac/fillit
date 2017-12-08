@@ -40,6 +40,16 @@ int ft_checkmap(int mapfile)
 	return (1);
 }
 
+int ft_acheckmap(int mapfile)
+{
+	char	buff[20];
+	while (read(mapfile, &buff, 20))
+	{
+		printf("%s\n", buff);
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	int	mapfile;
@@ -49,7 +59,7 @@ int	main(int argc, char **argv)
 		mapfile = open(argv[1], O_RDONLY);
 		if (mapfile)
 		{
-			if (ft_checkmap(mapfile))
+			if (ft_acheckmap(mapfile))
 			{
 				for (int i = 0; i < 16; i++)
 				{
