@@ -6,42 +6,24 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 15:40:14 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/10 18:50:46 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/10 20:29:56 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "fillit.h"
 
-typedef struct	list
-{
-	int 		map[4][2];
-	struct list	*next;
-	struct list *back;
-}				t_nod;
-
-t_nod		*ft_movetop(int elm[4][2], t_nod *list)
+t_nod	*ft_movetop(int elm[4][2], t_nod *list)
 {
 	t_nod	*nod;
 	int		i;
 	int		minx;
 	int		miny;
 
-	i = -1;
-	minx = 4;
-	miny = 4;
-	while (++i < 4)
-	{
-		if (elm[i][0] < minx)
-			minx = elm[i][0];
-		if (elm[i][1] < miny)
-			miny = elm[i][1];
-	}
 	nod = (t_nod *)malloc(sizeof(t_nod));
 	if (nod == NULL)
 		return (NULL);
+	minx = ft_min_2d_array((int *)elm, 4, 2, 0);
+	miny = ft_min_2d_array((int *)elm, 4, 2, 1);
 	i = -1;
 	while (++i < 4)
 	{
@@ -54,6 +36,8 @@ t_nod		*ft_movetop(int elm[4][2], t_nod *list)
 		list->next = nod;
 		nod->back = list;
 	}
+	else
+		nod->back = NULL;
 	return (nod);
 }
 
@@ -73,13 +57,13 @@ int		ft_elemcheck(char *s, int i)
 	return (v);
 }
 
-t_nod		*ft_checkelm(char *s, t_nod *list)
+t_nod	*ft_checkelm(char *s, t_nod *list)
 {
-	int 	i;
-	int 	v;
-	int 	pix;
-	int		elm[4][2];
-	int		nr;
+	int	i;
+	int	v;
+	int	pix;
+	int	elm[4][2];
+	int	nr;
 
 	i = -1;
 	v = 0;
@@ -102,7 +86,7 @@ t_nod		*ft_checkelm(char *s, t_nod *list)
 	return (ft_movetop(elm, list));
 }
 
-int	ft_read(int mapfile)
+int		ft_read(int mapfile)
 {
 	t_nod	*list;
 	char	buff[22];
@@ -130,13 +114,9 @@ int	ft_read(int mapfile)
 	return (1);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	int	mapfile;
-	int a = 9;
-	int b = 5;
-	int c = 4;
-	int d = 3;
 
 	if (argc == 2)
 	{
@@ -151,8 +131,5 @@ int	main(int argc, char **argv)
 				printf("mapa defecta\n");
 		}
 	}
-	mapfile = ((a > b) ? b : a) > ((c > d) ? d : c) ?
-		((c > d) ? d : c) : ((a > b) ? b : a);
-	printf("numar - |%d|\n", mapfile);
 	return (0);
 }
