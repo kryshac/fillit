@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:30:17 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/11 20:17:55 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/11 21:49:17 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_setmap_point(char **map, int mapsize)
 	map[i] = NULL;
 }
 
-char	**ft_malloc_map(int blocks, int mapsize)
+char	**ft_malloc_map(int mapsize)
 {
 	char	**map;
 	int		i;
@@ -48,7 +48,7 @@ char	**ft_malloc_map(int blocks, int mapsize)
 	if (map == NULL)
 		return (NULL);
 	i = 0;
-	while (i < blocks)
+	while (i < mapsize)
 	{
 		map[i] = (char *)malloc(sizeof(char) * (mapsize + 1));
 		if (map[i] == NULL)
@@ -59,24 +59,24 @@ char	**ft_malloc_map(int blocks, int mapsize)
 	return (map);
 }
 
-void	ft_printmap(char **map)
+void	ft_printmap(char **map, int max)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map[i])
+	while (i < max)
 	{
 
 		j = 0;
-		while (map[i][j])
+		while (j < max)
 			write(1, &map[i][j++], 1);
 		write(1, "\n", 1);
 		i++;
 	}
 }
 
-int		ft_check_exit(t_nod *lis, char **ma, int rn, int co, int max, char abc)
+int		ft_check_exist(t_nod *lis, char **ma, int rn, int co, int max, char abc)
 {
 	int i;
 
@@ -86,6 +86,8 @@ int		ft_check_exit(t_nod *lis, char **ma, int rn, int co, int max, char abc)
 		if (rn + lis->map[i][0] >= max)
 			return (0);
 		if (co + lis->map[i][1] >= max)
+			return (0);
+		if (ma[rn + lis->map[i][0]][co + lis->map[i][1]] != '.')
 			return (0);
 		i++;
 	}
@@ -109,7 +111,7 @@ int		ft_test(t_nod *list, char **map, int max)
 		col = 0;
 		while (col < max)
 		{
-			if (ft_check_exit(list, map, rnd, col, max, abc))
+			if (map[rnd][col] == '.' && ft_check_exist(list, map, rnd, col, max, abc))
 			{
 				if (list->next)
 				{
@@ -134,11 +136,10 @@ int	ft_algoritm(t_nod *list, int blocks)
 
 	mapsize = ft_min_size(blocks);
 	printf("numar - |%d|\n", mapsize);
-	if ((map = ft_malloc_map(blocks, mapsize + 2)) == NULL)
+	if ((map = ft_malloc_map(mapsize + 2)) == NULL)
 	 	return (0);
-	//ft_printmap(map);
-	//ft_test(list, map, mapsize);
-	//ft_printmap(map);
+	ft_test(list, map, mapsize);
+	ft_printmap(map, mapsize);
 	// printf("numar de elemente - %d\n", blocks);
 	// while (list != NULL)
 	// {
