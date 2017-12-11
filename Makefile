@@ -1,7 +1,7 @@
 NAME	= main
 COM		= gcc
 FLAGS	= -Wall -Wextra -Werror
-SRC		= main.c ft_min_2d_array.c
+SRC		= main.c ft_min_2d_array.c ft_algoritm.c
 OBJ		= $(SRC:%.c=%.o)
 
 all: $(NAME)

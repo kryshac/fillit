@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 19:18:28 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/10 20:32:24 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/11 14:49:12 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ typedef struct		s_list
 	struct s_list	*back;
 }					t_nod;
 int					ft_min_2d_array(int *elm, int x, int y, int col);
+int					ft_algoritm(t_nod *list, int blocks);
 #endif
