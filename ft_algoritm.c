@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:30:17 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/11 15:37:41 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/11 20:17:55 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_min_size(int blocks)
 	i = 0;
 	while (i * i < blocks * 4)
 		i++;
-	printf("numar patrat - %d\n", i);
 	return (i);
 }
 
@@ -40,20 +39,18 @@ void	ft_setmap_point(char **map, int mapsize)
 	map[i] = NULL;
 }
 
-char	**ft_malloc_map(int blocks)
+char	**ft_malloc_map(int blocks, int mapsize)
 {
 	char	**map;
-	int		mapsize;
 	int		i;
 
-	mapsize = ft_min_size(blocks);
 	map = (char **)malloc(sizeof(char *) * (mapsize + 1));
 	if (map == NULL)
 		return (NULL);
 	i = 0;
 	while (i < blocks)
 	{
-		map[i] = (char *)malloc(sizeof(char) * mapsize);
+		map[i] = (char *)malloc(sizeof(char) * (mapsize + 1));
 		if (map[i] == NULL)
 			return (NULL);
 		i++;
@@ -79,26 +76,80 @@ void	ft_printmap(char **map)
 	}
 }
 
+int		ft_check_exit(t_nod *lis, char **ma, int rn, int co, int max, char abc)
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (rn + lis->map[i][0] >= max)
+			return (0);
+		if (co + lis->map[i][1] >= max)
+			return (0);
+		i++;
+	}
+	ma[rn + lis->map[0][0]][co + lis->map[0][1]] = abc;
+	ma[rn + lis->map[1][0]][co + lis->map[1][1]] = abc;
+	ma[rn + lis->map[2][0]][co + lis->map[2][1]] = abc;
+	ma[rn + lis->map[3][0]][co + lis->map[3][1]] = abc;
+	return (1);
+}
+
+int		ft_test(t_nod *list, char **map, int max)
+{
+	char	abc;
+	int 	rnd;
+	int		col;
+
+	rnd = 0;
+	abc = 'A';
+	while (rnd < max)
+	{
+		col = 0;
+		while (col < max)
+		{
+			if (ft_check_exit(list, map, rnd, col, max, abc))
+			{
+				if (list->next)
+				{
+					abc++;
+					list = list->next;
+				}
+				else
+					return (0);
+			}
+			col++;
+		}
+		rnd++;
+	}
+	return (1);
+}
+
 int	ft_algoritm(t_nod *list, int blocks)
 {
 	char	**map;
-	int		i;
+	int		mapsize;
+	// int		i;
 
-
-	if ((map = ft_malloc_map(blocks)) == NULL)
-		return (0);
-	ft_printmap(map);
-	printf("numar de elemente - %d\n", blocks);
-	while (list != NULL)
-	{
-		i = 0;
-		while (i < 4)
-		{
-			printf("x - |%d|, y - |%d|\n", list->map[i][0], list->map[i][1]);
-			i++;
-		}
-		printf("\n");
-		list = list->next;
-	}
+	mapsize = ft_min_size(blocks);
+	printf("numar - |%d|\n", mapsize);
+	if ((map = ft_malloc_map(blocks, mapsize + 2)) == NULL)
+	 	return (0);
+	//ft_printmap(map);
+	//ft_test(list, map, mapsize);
+	//ft_printmap(map);
+	// printf("numar de elemente - %d\n", blocks);
+	// while (list != NULL)
+	// {
+	// 	i = 0;
+	// 	while (i < 4)
+	// 	{
+	// 		printf("x - |%d|, y - |%d|\n", list->map[i][0], list->map[i][1]);
+	// 		i++;
+	// 	}
+	// 	printf("\n");
+	// 	list = list->next;
+	// }
 	return (1);
 }
