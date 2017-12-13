@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 15:40:14 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 01:33:08 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/13 18:56:01 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,14 @@ t_nod	*ft_movetop(int elm[4][2], t_nod *list, char c)
 	{
 		nod->map[i][0] = elm[i][0] - ft_min_2d_array((int *)elm, 4, 2, 0);
 		nod->map[i][1] = elm[i][1] - ft_min_2d_array((int *)elm, 4, 2, 1);
-		nod->c = c;
 		i++;
 	}
+	nod->c = c;
 	nod->next = NULL;
 	if (list != NULL)
 	{
 		list->next = nod;
-		nod->back = list;
 	}
-	else
-		nod->back = NULL;
 	return (nod);
 }
 
@@ -84,29 +81,35 @@ t_nod	*ft_checkelm(char *s, t_nod *list, char c)
 	return (ft_movetop(elm, list, c));
 }
 
-t_nod	*ft_read(int mapfile)
+int		ft_read(int mapfile)
 {
 	t_nod	*list;
+	t_nod	*start;
 	char	buff[22];
+	int		blocks;
 	char	c;
 
 	list = NULL;
+	start = NULL;
 	c = 'A';
+	blocks = 1;
 	while (read(mapfile, &buff, 21))
 	{
 		buff[21] = '\0';
 		if ((list = ft_checkelm(buff, list, c)) == NULL)
-			return (NULL);
-		else
-			c++;
+			return (0);
+		if (start == NULL)
+			start = list;
+		c++;
+		blocks++;
 	}
-	return (list);
+	if (!ft_algoritm(start, blocks))
+		return (0);
+	return (1);
 }
 
 int		main(int argc, char **argv)
 {
-	t_nod	*list;
-	int		blocks;
 	int		mapfile;
 
 	if (argc == 2)
@@ -114,18 +117,7 @@ int		main(int argc, char **argv)
 		mapfile = open(argv[1], O_RDONLY);
 		if (mapfile)
 		{
-			if ((list = ft_read(mapfile)) != NULL)
-			{
-				blocks = 1;
-				while (list->back != NULL)
-				{
-					list = list->back;
-					blocks++;
-				}
-				if (!ft_algoritm(list, blocks))
-					printf("eroare\n");
-			}
-			else
+			if (ft_read(mapfile) == 0)
 				printf("mapa defecta\n");
 		}
 	}

@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_map.c                                     :+:      :+:    :+:   */
+/*   ft_min_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/13 01:37:45 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 18:55:38 by ccristia         ###   ########.fr       */
+/*   Created: 2017/12/13 19:17:25 by ccristia          #+#    #+#             */
+/*   Updated: 2017/12/13 19:17:38 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_print_map(char **map)
+int	ft_min_size(int blocks)
 {
-	int	i;
-	int	j;
+	int i;
 
 	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			ft_putchar(map[i][j]);
-			j++;
-		}
-		ft_putchar('\n');
+	while (i * i < blocks * 4)
 		i++;
-	}
+	return (i);
 }

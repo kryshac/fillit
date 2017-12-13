@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_map.c                                     :+:      :+:    :+:   */
+/*   ft_free_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/13 01:37:45 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 18:55:38 by ccristia         ###   ########.fr       */
+/*   Created: 2017/12/13 16:28:58 by ccristia          #+#    #+#             */
+/*   Updated: 2017/12/13 16:31:14 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_print_map(char **map)
+void	ft_free_map(char **map)
 {
-	int	i;
-	int	j;
+	int	rn;
 
-	i = 0;
-	while (map[i])
+	rn = 0;
+	while (map[rn])
 	{
-		j = 0;
-		while (map[i][j])
-		{
-			ft_putchar(map[i][j]);
-			j++;
-		}
-		ft_putchar('\n');
-		i++;
+		free(map[rn]);
+		rn++;
 	}
+	free(map);
 }

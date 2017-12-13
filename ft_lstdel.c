@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_map.c                                     :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/13 01:37:45 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 18:55:38 by ccristia         ###   ########.fr       */
+/*   Created: 2017/12/13 19:21:20 by ccristia          #+#    #+#             */
+/*   Updated: 2017/12/13 19:25:18 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_print_map(char **map)
+void	ft_lstdel(t_nod *alst)
 {
-	int	i;
-	int	j;
+	t_nod	*pnt;
+	t_nod	*tmp;
 
-	i = 0;
-	while (map[i])
+	pnt = alst;
+	while (pnt)
 	{
-		j = 0;
-		while (map[i][j])
-		{
-			ft_putchar(map[i][j]);
-			j++;
-		}
-		ft_putchar('\n');
-		i++;
+		tmp = pnt->next;
+		free(pnt);
+		pnt = tmp;
 	}
+	alst = NULL;
 }

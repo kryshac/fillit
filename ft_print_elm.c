@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_map.c                                     :+:      :+:    :+:   */
+/*   ft_print_elm.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/13 01:37:45 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 18:55:38 by ccristia         ###   ########.fr       */
+/*   Created: 2017/12/13 18:56:38 by ccristia          #+#    #+#             */
+/*   Updated: 2017/12/13 18:56:55 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_print_map(char **map)
+void	ft_print_elm(t_nod *list)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map[i])
+	while (i < 4)
 	{
 		j = 0;
-		while (map[i][j])
+		while (j < 4)
 		{
-			ft_putchar(map[i][j]);
+			if ((list->map[0][0] == i && list->map[0][1] == j) ||
+				(list->map[1][0] == i && list->map[1][1] == j) ||
+				(list->map[2][0] == i && list->map[2][1] == j) ||
+				(list->map[3][0] == i && list->map[3][1] == j))
+				printf("#");
+			else
+				printf(" ");
 			j++;
 		}
-		ft_putchar('\n');
+		printf("\n");
 		i++;
 	}
 }
