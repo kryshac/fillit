@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:30:17 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/11 21:49:17 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/13 01:45:00 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,7 @@ char	**ft_malloc_map(int mapsize)
 	return (map);
 }
 
-void	ft_printmap(char **map, int max)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < max)
-	{
-
-		j = 0;
-		while (j < max)
-			write(1, &map[i][j++], 1);
-		write(1, "\n", 1);
-		i++;
-	}
-}
-
-int		ft_check_exist(t_nod *lis, char **ma, int rn, int co, int max, char abc)
+int		ft_check_exist(t_nod *lis, char **ma, int rn, int co, int max)
 {
 	int i;
 
@@ -91,66 +74,121 @@ int		ft_check_exist(t_nod *lis, char **ma, int rn, int co, int max, char abc)
 			return (0);
 		i++;
 	}
-	ma[rn + lis->map[0][0]][co + lis->map[0][1]] = abc;
-	ma[rn + lis->map[1][0]][co + lis->map[1][1]] = abc;
-	ma[rn + lis->map[2][0]][co + lis->map[2][1]] = abc;
-	ma[rn + lis->map[3][0]][co + lis->map[3][1]] = abc;
+	ma[rn + lis->map[0][0]][co + lis->map[0][1]] = lis->c;
+	ma[rn + lis->map[1][0]][co + lis->map[1][1]] = lis->c;
+	ma[rn + lis->map[2][0]][co + lis->map[2][1]] = lis->c;
+	ma[rn + lis->map[3][0]][co + lis->map[3][1]] = lis->c;
 	return (1);
 }
 
-int		ft_test(t_nod *list, char **map, int max)
+// int		ft_test(t_nod *list, char **map, int max)
+// {
+// 	int 	rnd;
+// 	int		col;
+//
+// 	rnd = 0;
+// 	while (rnd < max)
+// 	{
+// 		col = 0;
+// 		while (col < max)
+// 		{
+// 			if (map[rnd][col] == '.' && ft_check_exist(list, map, rnd, col, max))
+// 			{
+// 				if (list->next)
+// 					list = list->next;
+// 				else
+// 					return (0);
+// 			}
+// 			col++;
+// 		}
+// 		rnd++;
+// 	}
+// 	return (1);
+// }
+
+void	ft_print_elm(t_nod *list)
 {
-	char	abc;
-	int 	rnd;
-	int		col;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			if ((list->map[0][0] == i && list->map[0][1] == j) ||
+				(list->map[1][0] == i && list->map[1][1] == j) ||
+				(list->map[2][0] == i && list->map[2][1] == j) ||
+				(list->map[3][0] == i && list->map[3][1] == j))
+				printf("#");
+			else
+				printf(" ");
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
+int		ft_test(t_nod *list, char **map, int rnd, int col, int max)
+{
+	int irnd;
+	int icol;
+
+	irnd = rnd;
+	icol = col;
+	while (irnd < max)
+	{
+		while (icol < max)
+		{
+			if (map[irnd][icol] == '.' &&
+				ft_check_exist(list, map, irnd, icol, max))
+			 	return (1);
+			icol++;
+		}
+		icol = 0;
+		irnd++;
+	}
+	return (0);
+}
+
+int	ft_retry(t_nod *list, char **map, int max)
+{
+	int	rnd;
+	int	col;
 
 	rnd = 0;
-	abc = 'A';
 	while (rnd < max)
 	{
 		col = 0;
 		while (col < max)
 		{
-			if (map[rnd][col] == '.' && ft_check_exist(list, map, rnd, col, max, abc))
+			if (ft_test(list, map, rnd, col, max))
 			{
-				if (list->next)
-				{
-					abc++;
-					list = list->next;
-				}
+				if (list->next == NULL)
+					return (1);
+				else if (ft_retry(list->next, map, max))
+					return (1);
 				else
-					return (0);
+					ft_remove_elm(list, map);
 			}
 			col++;
 		}
 		rnd++;
 	}
-	return (1);
+	return (0);
 }
 
 int	ft_algoritm(t_nod *list, int blocks)
 {
 	char	**map;
 	int		mapsize;
-	// int		i;
 
 	mapsize = ft_min_size(blocks);
-	printf("numar - |%d|\n", mapsize);
-	if ((map = ft_malloc_map(mapsize + 2)) == NULL)
+	if ((map = ft_malloc_map(mapsize)) == NULL)
 	 	return (0);
-	ft_test(list, map, mapsize);
-	ft_printmap(map, mapsize);
-	// printf("numar de elemente - %d\n", blocks);
-	// while (list != NULL)
-	// {
-	// 	i = 0;
-	// 	while (i < 4)
-	// 	{
-	// 		printf("x - |%d|, y - |%d|\n", list->map[i][0], list->map[i][1]);
-	// 		i++;
-	// 	}
-	// 	printf("\n");
-	// 	list = list->next;
-	// }
+	ft_retry(list, map, mapsize);
+	ft_print_map(map);
 	return (1);
 }

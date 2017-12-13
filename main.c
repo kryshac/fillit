@@ -6,29 +6,27 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 15:40:14 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/11 20:14:29 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/13 01:33:08 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-t_nod	*ft_movetop(int elm[4][2], t_nod *list)
+t_nod	*ft_movetop(int elm[4][2], t_nod *list, char c)
 {
 	t_nod	*nod;
 	int		i;
-	int		minx;
-	int		miny;
 
 	nod = (t_nod *)malloc(sizeof(t_nod));
 	if (nod == NULL)
 		return (NULL);
-	minx = ft_min_2d_array((int *)elm, 4, 2, 0);
-	miny = ft_min_2d_array((int *)elm, 4, 2, 1);
-	i = -1;
-	while (++i < 4)
+	i = 0;
+	while (i < 4)
 	{
-		nod->map[i][0] = elm[i][0] - minx;
-		nod->map[i][1] = elm[i][1] - miny;
+		nod->map[i][0] = elm[i][0] - ft_min_2d_array((int *)elm, 4, 2, 0);
+		nod->map[i][1] = elm[i][1] - ft_min_2d_array((int *)elm, 4, 2, 1);
+		nod->c = c;
+		i++;
 	}
 	nod->next = NULL;
 	if (list != NULL)
@@ -57,7 +55,7 @@ int		ft_elemcheck(char *s, int i)
 	return (v);
 }
 
-t_nod	*ft_checkelm(char *s, t_nod *list)
+t_nod	*ft_checkelm(char *s, t_nod *list, char c)
 {
 	int	i;
 	int	v;
@@ -83,20 +81,24 @@ t_nod	*ft_checkelm(char *s, t_nod *list)
 				(pix < 0 || !(v == 6 || v == 8))))
 			return (NULL);
 	}
-	return (ft_movetop(elm, list));
+	return (ft_movetop(elm, list, c));
 }
 
 t_nod	*ft_read(int mapfile)
 {
 	t_nod	*list;
 	char	buff[22];
+	char	c;
 
 	list = NULL;
+	c = 'A';
 	while (read(mapfile, &buff, 21))
 	{
 		buff[21] = '\0';
-		if ((list = ft_checkelm(buff, list)) == NULL)
+		if ((list = ft_checkelm(buff, list, c)) == NULL)
 			return (NULL);
+		else
+			c++;
 	}
 	return (list);
 }
@@ -120,8 +122,8 @@ int		main(int argc, char **argv)
 					list = list->back;
 					blocks++;
 				}
-				if (ft_algoritm(list, blocks))
-					printf("printare\n");
+				if (!ft_algoritm(list, blocks))
+					printf("eroare\n");
 			}
 			else
 				printf("mapa defecta\n");
