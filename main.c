@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 15:40:14 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 18:56:01 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/13 23:51:47 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		ft_read(int mapfile)
 	list = NULL;
 	start = NULL;
 	c = 'A';
-	blocks = 1;
+	blocks = 0;
 	while (read(mapfile, &buff, 21))
 	{
 		buff[21] = '\0';
@@ -118,7 +118,7 @@ int		main(int argc, char **argv)
 		if (mapfile)
 		{
 			if (ft_read(mapfile) == 0)
-				printf("mapa defecta\n");
+				ft_putstr("error\n");
 		}
 	}
 	return (0);

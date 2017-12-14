@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 19:18:28 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 19:24:59 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/13 23:09:17 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void				ft_print_elm(t_nod *list);
 char				**ft_malloc_map(int mapsize);
 int					ft_min_size(int blocks);
 void				ft_lstdel(t_nod *alst);
+void				ft_putstr(char const *s);
 #endif

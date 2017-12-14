@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:30:17 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 19:25:03 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/13 23:57:38 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int	ft_test(t_nod *list, char **map, int vec[2], int max)
 	{
 		while (tvec[1] < max)
 		{
-			if (map[tvec[0]][tvec[1]] == '.' &&
-				ft_check_exist(list, map, tvec, max))
+			if (ft_check_exist(list, map, tvec, max))
 				return (1);
 			tvec[1]++;
 		}
