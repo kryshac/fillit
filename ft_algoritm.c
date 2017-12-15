@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:30:17 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 23:57:38 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/15 18:06:24 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ int	ft_test(t_nod *list, char **map, int vec[2], int max)
 
 	tvec[0] = vec[0];
 	tvec[1] = vec[1];
+	printf("\n\n<----------->\n");
+	ft_print_elm(list);
+	ft_print_map(map);
+	printf("x - |%d|, y - |%d|\n\n", tvec[0], tvec[1]);
 	while (tvec[0] < max)
 	{
 		while (tvec[1] < max)
@@ -64,7 +68,7 @@ int	ft_retry(t_nod *list, char **map, int max)
 		vec[1] = 0;
 		while (vec[1] < max)
 		{
-			if (ft_test(list, map, vec, max))
+			if (ft_check_exist(list, map, vec, max))
 			{
 				if (list->next == NULL)
 					return (1);
