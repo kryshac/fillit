@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_2d_array.c                                  :+:      :+:    :+:   */
+/*   ft_setzero.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/10 20:29:47 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/16 17:26:32 by ccristia         ###   ########.fr       */
+/*   Created: 2017/12/16 17:09:29 by ccristia          #+#    #+#             */
+/*   Updated: 2017/12/16 17:09:42 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int	ft_min_2d_array(int *elm, int x, int y, int col)
+int		ft_setzero(char *str)
 {
-	int	i;
-	int	min;
+	int i;
 
-	i = 0;
-	min = 4;
-	while (i < x)
+	i = 19;
+	while (i >= 0)
 	{
-		if (*(elm + i * y + col) < min)
-			min = *(elm + i * y + col);
-		i++;
+		str[i] = '0';
+		i--;
 	}
-	return (min);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 19:18:28 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/13 23:09:17 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/16 17:45:35 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
 
 typedef struct		s_list
@@ -30,9 +29,9 @@ void				ft_print_map(char **map);
 void				ft_putchar(char c);
 void				ft_remove_elm(t_nod *list, char **map);
 void				ft_free_map(char **map);
-void				ft_print_elm(t_nod *list);
 char				**ft_malloc_map(int mapsize);
 int					ft_min_size(int blocks);
 void				ft_lstdel(t_nod *alst);
 void				ft_putstr(char const *s);
+int					ft_setzero(char *str);
 #endif

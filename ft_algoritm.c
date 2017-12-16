@@ -6,7 +6,7 @@
 /*   By: ccristia <ccristia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:30:17 by ccristia          #+#    #+#             */
-/*   Updated: 2017/12/15 18:06:24 by ccristia         ###   ########.fr       */
+/*   Updated: 2017/12/16 17:39:10 by ccristia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,31 +34,7 @@ int	ft_check_exist(t_nod *lis, char **ma, int vec[2], int max)
 	return (1);
 }
 
-int	ft_test(t_nod *list, char **map, int vec[2], int max)
-{
-	int tvec[2];
-
-	tvec[0] = vec[0];
-	tvec[1] = vec[1];
-	printf("\n\n<----------->\n");
-	ft_print_elm(list);
-	ft_print_map(map);
-	printf("x - |%d|, y - |%d|\n\n", tvec[0], tvec[1]);
-	while (tvec[0] < max)
-	{
-		while (tvec[1] < max)
-		{
-			if (ft_check_exist(list, map, tvec, max))
-				return (1);
-			tvec[1]++;
-		}
-		tvec[1] = 0;
-		tvec[0]++;
-	}
-	return (0);
-}
-
-int	ft_retry(t_nod *list, char **map, int max)
+int	ft_backtraking(t_nod *list, char **map, int max)
 {
 	int	vec[2];
 
@@ -72,7 +48,7 @@ int	ft_retry(t_nod *list, char **map, int max)
 			{
 				if (list->next == NULL)
 					return (1);
-				else if (ft_retry(list->next, map, max))
+				else if (ft_backtraking(list->next, map, max))
 					return (1);
 				else
 					ft_remove_elm(list, map);
@@ -92,9 +68,8 @@ int	ft_algoritm(t_nod *list, int blocks)
 	mapsize = ft_min_size(blocks);
 	if ((map = ft_malloc_map(mapsize)) == NULL)
 		return (0);
-	while (ft_retry(list, map, mapsize) == 0)
+	while (ft_backtraking(list, map, mapsize) == 0)
 	{
-		printf("test\n");
 		ft_free_map(map);
 		mapsize++;
 		if ((map = ft_malloc_map(mapsize)) == NULL)
